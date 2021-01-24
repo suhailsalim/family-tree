@@ -1,0 +1,9 @@
+<div class="mat-drawer-container container">
+  <app-header></app-header>
+  <form [formGroup]="familyForm">
+    <mat-slider class="example-margin" [max]="5" [min]="1" [step]="1" [thumbLabel]="true"
+      formControlName="familyMembers" [(displayWith)]="displayWith">
+    </mat-slider>
+  </form>
+  {{ familyMembersMap[familyMembers] }}
+</div>
