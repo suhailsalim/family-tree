@@ -1,5 +1,5 @@
-<div class="outer-container">
-  <div class="mat-drawer-container container">
+<div class="outer-container mat-drawer-container">
+  <div class="container">
     <form [formGroup]="familyForm">
       <div class="ui-item">
         <mat-card class="example-card">
@@ -45,9 +45,9 @@
           </mat-list-item>
         </mat-list>
       </div>
-      <ng-container *ngIf="familyForm.invalid && familyForm.errors.invalidTotalMembers">
-        <h3 style="color: red;">{{ familyForm.errors.invalidTotalMembers }}</h3>
-      </ng-container>
     </form>
   </div>
+  <ng-container *ngIf="familyForm.invalid && familyForm.errors.invalidTotalMembers">
+    <h3 style="color: red;">VALIDATION ERROR: {{ familyForm.errors.invalidTotalMembers }}</h3>
+  </ng-container>
 </div>
