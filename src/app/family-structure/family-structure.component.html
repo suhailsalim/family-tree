@@ -1,9 +1,53 @@
-<div class="mat-drawer-container container">
-  <app-header></app-header>
-  <form [formGroup]="familyForm">
-    <mat-slider class="example-margin" [max]="5" [min]="1" [step]="1" [thumbLabel]="true"
-      formControlName="familyMembers" [(displayWith)]="displayWith">
-    </mat-slider>
-  </form>
-  {{ familyMembersMap[familyMembers] }}
+<div class="outer-container">
+  <div class="mat-drawer-container container">
+    <form [formGroup]="familyForm">
+      <div class="ui-item">
+        <mat-card class="example-card">
+          <mat-card-header>
+            <mat-card-title>What is your family structure like ?</mat-card-title>
+          </mat-card-header>
+          <mat-slider class="example-margin" [max]="5" [min]="1" [step]="1" [thumbLabel]="true"
+            formControlName="familyMembers" [(displayWith)]="displayWith">
+          </mat-slider>
+          <mat-card-content>
+            <h3>{{ FAMILY_MEMBERS_MAP[familyMembers] }}</h3>
+          </mat-card-content>
+        </mat-card>
+      </div>
+      <h4>Actual Number of Members in the family</h4>
+      <div class="ui-item">
+        <mat-form-field appearance="fill">
+          <mat-label>No of Members</mat-label>
+          <mat-select formControlName="totalActualMembers" name="food">
+            <mat-option *ngFor="let food of TOTAL_MEMBERS_OPTIONS" [value]="food.value">
+              {{food.label}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="ui-item">
+        <mat-list role="list" formArrayName="memberGroups">
+          <mat-list-item role="listitem"
+            *ngFor="let familyMember of familyForm.get('memberGroups')['controls']; let i = index;">
+            <ng-container [formGroupName]="i">
+              <div style="width: 100%; display: flex; flex-direction: row; justify-content: space-between;">
+                  <mat-checkbox formControlName="isSelected">
+                    {{ familyMember.value.label }}
+                  </mat-checkbox>
+                  <ng-container *ngIf="familyMember.value.isSelected">
+                    <mat-form-field style="width: 80px;">
+                      <input type="number" matInput min="0" [max]="totalActualMembers" formControlName="noOfMembers">
+                      <span matSuffix>v</span>
+                    </mat-form-field>
+                  </ng-container>
+              </div>
+            </ng-container>
+          </mat-list-item>
+        </mat-list>
+      </div>
+      <ng-container *ngIf="familyForm.invalid && familyForm.errors.invalidTotalMembers">
+        <h3 style="color: red;">{{ familyForm.errors.invalidTotalMembers }}</h3>
+      </ng-container>
+    </form>
+  </div>
 </div>
